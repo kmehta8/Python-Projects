@@ -1,0 +1,52 @@
+## @file Statistics.py
+#  @title Statistics
+#  @author Kshitij Mehta
+#  @date 1/28/2017
+import CircleADT
+import numpy
+## @brief A function that calculates the average of the radii based off the provided list of CircleT objects
+#  @details Assumption is made that this function takes four instances of CircleT. Numpy is used to compute the average after the radii are stored in an array.
+#  @param a First instance of CircleT
+#  @param b Second instance of CircleT
+#  @param c Third instance of CircleT
+#  @param d Fourth instance of CircleT
+#  @return A float representing the average.
+def average(a, b, c, d):
+    #The getter "radius" is used from CircleADT.py to extract the radius of each instance, and then stored in an array using Numpy.
+    arr1 = numpy.array([a.r, b.r, c.r, d.r])
+    return numpy.average(arr1)
+## @brief A function that computes the standard deviation of a given radii.
+#  @details Assumption is made that this function takes four instances of CircleT. This function uses numpy to store the radii in an array and compute the standard deviation.
+#  @param a First instance of CircleT
+#  @param b Second instance of CircleT
+#  @param c Third instance of CircleT
+#  @param d Fourth instance of CircleT
+#  @return A float representing the standard deviation.
+def stdDev(a, b, c, d):
+    arr2 = numpy.array([a.r, b.r, c.r, d.r])
+    return numpy.std(arr2)
+## @brief A function that ranks radii in a descending order.
+#  @details Assumption is made that this function takes four instances of CircleT. The radii are stored in array and for loop iterates through the array, ranking the elemnets at each index. In every iteration, the index of the maximum element is found
+#  and in another array, a rank is given at the same index. That maximum element is replaced by a number lower than the minimum element in the array, and the loop iterates again until the max size of the array.
+#  Assumption is made that if the radii are the same, the rank will be given based on their indices. For e.g. [2, 4, 9, 2] will be [3, 2, 1, 4].
+#  @param a First instance of CircleT
+#  @param b Second instance of CircleT
+#  @param c Third instance of CircleT
+#  @param d Fourth instance of CircleT
+#  @return A array representing the ranks of the radii.
+def rank(a, b, c, d):
+    arr3 = [a.r, b.r, c.r, d.r]
+    n = len(arr3)
+    #A new array is made with the same size as arr3.
+    newArr = [0] * n
+    for i in range(1, n + 1):
+        #Finds the index of the max element in arr3 and stores it.
+        indexAtMax = arr3.index(max(arr3))
+        #At the same index in newArr, a rank is given to the max element.
+        newArr[indexAtMax] = i
+        #A new minimum number is set by finding the original min number in the arr3 and subtracting by 1.
+        newMinNumber = min(arr3) - 1
+        #The max element in arr3 is replaced by the new min number.
+        arr3[indexAtMax] = newMinNumber
+        #In the next iteration, the next maximum number will be found (i.e the second highest element in the array) and then its rank will be given accordingly. The loop will continue in this manner.
+    return newArr
