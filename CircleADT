@@ -1,0 +1,121 @@
+## @file CircleADT.py
+#  @title CircleADT
+#  @author Kshitij Mehta
+#  @date 1/28/2017
+import math
+## @brief This class represents the object CircleT.
+#  @details This class represents a circle which takes 3 parameters.
+#  @param x the x coordinate of the circle.
+#  @param y the y coordinate of the circle.
+#  @param r the radius of the circle.
+class CircleT:
+    def __init__(self, x, y, r):
+        self.x = x
+        self.y = y
+        self.r = r
+    
+    ## @brief A getter that returns the x coordinate.
+    #  @return A number representing the x coordinate.        
+    def xcoord(self):
+        return self.x
+    
+    ## @brief A getter that returns the y coordinate.
+    #  @return A number representing the y coordinate
+    def ycoord(self):
+        return self.y
+    ## @brief A getter that returns the radius.
+    #  @return A number representing the radius.
+    def radius(self):
+        return self.r
+    
+    ## @brief A method for the area of the circle following the formula pi * r^2.
+    #  @return A float representing the area of the circle.
+    def area(self):
+        return (self.r**2) * math.pi
+    
+    ## @brief A method for the circumference following the formula 2 * pi * r.
+    #  @return A float representing the circumference of the circle.
+    def circumference(self):
+        return self.r * 2 * math.pi
+    ## @brief A method that returns determines if the circle is inside the box.
+    #  @details The method accepts four parameters which represent the dimensions of the box. It then performs a series of if statments, comparing the furthest points of the circle with the dimensions of the box to figure out whether or not the circle is in the box.
+    #  @param x0 The x coordinate of the left corner of the box.
+    #  @param y0 The y coordinate of the left corner of the box.
+    #  @param w The width of the box.
+    #  @param h The height of the box.
+    #  @return True or False depending on whether the circle is in the box.
+    def insideBox(self, x0, y0, w, h):
+        self.x0 = x0
+        self.y0 = y0
+        self.w = w
+        self.h = h
+        # The rightmost x coordinate of the circle.
+        rightWidthCheck = self.r + self.x
+        # The leftmost x coordinate of the circle.
+        leftWidthCheck = self.x - self.r
+        # The topmost y coordinate of the circle
+        heightCheck = self.r + self.y
+        # Checks if the rightmost x coordinate is less than or equal to the width of the box.
+        if self.w >= rightWidthCheck:
+            #Checks if the topmost y coordinate is less than or equal to the heigth of the box.
+            if self.h >= heightCheck:
+                #Checks if the x coordinate of the left corner of the box  is less than or equal to the leftmost x coordinate of the circle.
+                if leftWidthCheck >= self.x0:
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+    ## @brief A method that determines whether two circles are intersecting.
+    #  @details This method takes three parameters that represent the dimensions of the circle. It then executes a series of if statments, comparing the furthest points on both cirles and checking to see if they intersect.
+    #  @param x1 The x coordinate of the new CircleT object.
+    #  @param y1 The y coordinate of the new CircleT object.
+    #  @param r1 The radius of the new CircleT object.
+    def intersect(self, x1, y1, r1):
+        c = CircleT(x1, y1, r1)
+        #Computes the rightmost x coordinate of the original circle.
+        firstCircleRight = self.x + self.r
+        #Computes the leftmost x coordinate of the original circle.
+        firstCircleLeft = self.x - self.r
+        #Computes the bottommost y coordinate of the original circle.
+        firstCircleBottom = self.y + self.r
+        #Computes the topmost y coordinate of the original circle.
+        firstCircleTop = self.y - self.r
+        #The following four variables follow the same manner as above, except it is for the second circle.
+        secondCircleLeft = c.x - c.r
+        secondCircleRight = c.x + c.r
+        secondCircleBottom = c.y + c.r
+        secondCircleTop = c.y - c.r
+        #Checks if leftmost x coordinate of the second circle is less than the rightmost x coordinate of the first circle (in cases where the circles are interesecting from the right side of the first circle).
+        if secondCircleLeft < firstCircleRight:
+            #Checks if the rightmost x coordinate of the second circle is greater than the leftmost x coordinate of the first circle (in cases where the circles are intersecting from left side of the first circle).
+            if secondCircleRight > firstCircleLeft:
+                #Checks if the bottomost y coordinate of the second circle is greater than the topmost y coordinate of the first circle (in cases where the circles are intersecting from the top side of the first circle).
+                if secondCircleBottom > firstCircleTop:
+                    #Checks if the topmost y coordinate of the second circle is less than the bottomost y coordinate of the first circle (in cases where the circles are interesecting from the bottom side of the first circle).
+                    if secondCircleTop < firstCircleBottom:
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+    
+    ## @brief A method that changes the radius of the circle by a factor of the given input.
+    #  @param k A float used for scaling the radius.
+    #  @return A float representing the new radius.
+    def scale(self, k):
+        newRadius = self.r * k
+        return newRadius
+    ## @brief A method that translates the circle
+    #  @details This method takes two parameters and adds or subtracts them from the original x and y coordinates.
+    #  @return (x, y) coordinates of the new, tanslated circle.
+    def translate(self, dx, dy):
+        newX = self.x + dx
+        newY = self.y + dy
+        return newX, newY
