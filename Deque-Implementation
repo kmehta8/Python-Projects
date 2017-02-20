@@ -1,0 +1,68 @@
+class Deque:
+
+    MAX_SIZE = 20
+    s = []
+    
+    def init():
+        Deque.s = []
+
+    def  pushBack(c):
+        s = Deque.s
+        size = len(s)
+        if size == MAX_SIZE:
+            raise Full("Maximum size exceeded")
+        s = s[size-1] + [c]
+        Deque.s = s
+
+    def pushFront(c):
+        s = Deque.s
+        size = len(s)
+        if size == MAX_SIZE:
+            raise Full("Maximum size exceeded")
+        s = [c] + s[0]
+        Deque.s = s
+
+    def popBack():
+        s = Deque.s
+        size = len(s)
+        if size == 0:
+            raise Empty("Sequence is empty")
+        s = s[0:size-1]
+        Deque.s = s
+
+    def popFront():
+        s = Deque.s
+        size = len(s)
+        if size == 0:
+            raise Empty("Sequence is empty")
+        s = s[1:size]
+        Deque.s = s
+
+    def back():
+        s = Deque.s
+        size = len(s)
+        if size == 0:
+            raise Empty("Sequence is empty")
+        return Deque.s[size-1]
+
+    def front():
+        s = Deque.s
+        size = len(s)
+        if size == 0:
+            raise Empty("Sequence is empty")
+        return Deque.s[0]
+
+    def size():
+        return len(Deque.s)
+
+class Full(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return str(self.value)
+
+class Empty(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return str(self.value)
