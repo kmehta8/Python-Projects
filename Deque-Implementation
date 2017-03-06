@@ -1,66 +1,111 @@
-class Deque:
+class Deq:
 
     MAX_SIZE = 20
     s = []
     
+    ## @bried A constructor for the Deq object.
+    #  @details It initializes the sequence used in the object.
+    
+    @staticmethod
     def init():
-        Deque.s = []
-
-    def  pushBack(c):
-        s = Deque.s
+        Deq.s = []
+        
+    ## @brief A method to insert an element at the back of the sequence
+    #  @details An exception is added in case the user tries to push an object into the sequence when the sequence is already full.
+    #  The insert() function is used to insert an item at the left end of the sequence,, since that is considered as the back. 
+    #  @param c A CircleT object to insert.
+    
+    @staticmethod
+    def pushBack(c):
+        s = Deq.s
         size = len(s)
-        if size == MAX_SIZE:
+        if size == Deq.MAX_SIZE:
             raise Full("Maximum size exceeded")
-        s = s[size-1] + [c]
-        Deque.s = s
-
+        s.append(c)
+        Deq.s = s
+        
+    ## @brief A method to insert an element at the front of the sequence
+    #  @details An exception is added in case the user tries to push an object into the sequence when the sequence is already full.
+    #  The append() function is used to insert an item at the front since the right end of the sequence is considered to be the front.
+    #  @param c A CircleT object to append.
+    
+    @staticmethod
     def pushFront(c):
-        s = Deque.s
+        s = Deq.s
         size = len(s)
-        if size == MAX_SIZE:
+        if size == Deq.MAX_SIZE:
             raise Full("Maximum size exceeded")
-        s = [c] + s[0]
-        Deque.s = s
-
+        s.insert(0, c)
+        Deq.s = s
+        
+    ## @brief A method that removes an element from the back of the sequence.
+    #  @details An exception is added in case the user tries to use this method when the sequence is empty.
+    #  The line "s = s[0:size-1]" creates a new sequence where the rightmost element is not included and then this new sequence is
+    #  stored back into Deq.s.
+    
+    @staticmethod
     def popBack():
-        s = Deque.s
+        s = Deq.s
         size = len(s)
         if size == 0:
             raise Empty("Sequence is empty")
         s = s[0:size-1]
-        Deque.s = s
-
+        Deq.s = s
+        
+    ## @brief A method that removes an element from the front of the sequence.
+    #  @details An exception is added in case the user tries to use this method when the sequence is empty.
+    #  The line "s = s[1:size] is used to create a new sequence where the leftmost element is not included and then this new sequence is
+    #  stored back into Deq.s.
+    
+    @staticmethod
     def popFront():
-        s = Deque.s
+        s = Deq.s
         size = len(s)
         if size == 0:
             raise Empty("Sequence is empty")
         s = s[1:size]
-        Deque.s = s
-
+        Deq.s = s
+        
+    ## @brief A getter for the item at the back of the sequence (rightmost item).
+    #  @details An exception is raised if the user tries to call this method on an empty Deq.
+    #  @return The last element in the sequence.   
+    
+    @staticmethod
     def back():
-        s = Deque.s
+        s = Deq.s
         size = len(s)
         if size == 0:
             raise Empty("Sequence is empty")
-        return Deque.s[size-1]
-
+        return Deq.s[size-1]
+        
+    ## @brief A getter for the item at the front of the sequence (leftmost item).
+    #  @details An exception is raised if the user tries to call this method on an empty Deq.
+    #  @return The first element in the sequence.
+    
+    @staticmethod
     def front():
-        s = Deque.s
+        s = Deq.s
         size = len(s)
         if size == 0:
             raise Empty("Sequence is empty")
-        return Deque.s[0]
-
+        return Deq.s[0]
+        
+    ## @brief A getter for the size of the sequence.
+    #  @details The number of items in the sequence.
+    
+    @staticmethod
     def size():
-        return len(Deque.s)
-
+        return len(Deq.s)
+            
+        
+## @brief This class constitutes an exception for cases where the sequence is full.
 class Full(Exception):
     def __init__(self, value):
         self.value = value
     def __str__(self):
         return str(self.value)
-
+        
+## @brief This class constitutes an exception for cases where the sequence is empty.
 class Empty(Exception):
     def __init__(self, value):
         self.value = value
